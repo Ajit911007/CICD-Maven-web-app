@@ -16,7 +16,7 @@ tasks:
   - name: Log in to Docker Hub
     docker_login:
       username: hunjan
-      password: @200oclocK
+      password: "@200oclocK"
   - name: Push Docker Image
     command: docker push hunjan/mavenwebapp
 
