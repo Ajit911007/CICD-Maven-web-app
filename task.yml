@@ -17,8 +17,6 @@ tasks:
     docker_login:
       username: hunjan
       password: @200oclocK
-    when: ansible_connection == "local"  # Only log in when running locally, adjust if needed
-
   - name: Push Docker Image
     command: docker push hunjan/mavenwebapp
 
