@@ -1,25 +1,35 @@
 ---
-- name: First Play - Docker Image Build
-  hosts: docker
-  tasks:
-    - name: Copy Dockerfile
-      copy:
-       src: Dockerfile
-       dest: /home/ansible/
-    - name: Copy Artifact
-      copy:
-       src: target
-       dest: /home/ansible
-    - name : Build image
-      command: docker build -t hunjan/mavenwebapp .
-    - name : Push Docker Image
-      command: docker push hunjan/mavenwebapp
+tasks:
+  - name: Copy Dockerfile
+    copy:
+      src: Dockerfile
+      dest: /home/ansible/
+
+  - name: Copy Artifact
+    copy:
+      src: target
+      dest: /home/ansible
+
+  - name: Build image
+    command: docker build -t hunjan/mavenwebapp .
+  
+  - name: Log in to Docker Hub
+    docker_login:
+      username: hunjan
+      password: @200oclocK
+    when: ansible_connection == "local"  # Only log in when running locally, adjust if needed
+
+  - name: Push Docker Image
+    command: docker push hunjan/mavenwebapp
+
 - name: Second Play - K8s Deployment
   hosts: eks
   tasks:
-   - name: 
-     copy:
-       src: k8s-deploy.yml
-       dest: /home/ansadmin
-   - name : K8S Deployment
-     command: kubectl apply -f k8s-deploy.yml
+    - name: Copy Kubernetes YAML
+      copy:
+        src: k8s-deploy.yml
+        dest: /home/ansadmin
+
+    - name: K8S Deployment
+      command: kubectl apply -f k8s-deploy.yml
+
