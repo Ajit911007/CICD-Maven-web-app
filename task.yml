@@ -11,9 +11,9 @@
        src: target
        dest: /home/ansible
     - name : Build image
-      command: sudo docker build -t hunjan/mavenwebapp .
-    - name : sudo Push Docker Image
-      command: sudo docker push hunjan/mavenwebapp
+      command: docker build -t hunjan/mavenwebapp .
+    - name : Push Docker Image
+      command: docker push hunjan/mavenwebapp
 - name: Second Play - K8s Deployment
   hosts: eks
   tasks:
