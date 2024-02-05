@@ -4,24 +4,30 @@
   tasks:
     - name: Copy Dockerfile
       copy:
-       src: Dockerfile
-       dest: /home/ansible/
+        src: Dockerfile
+        dest: /home/ansible/
+
     - name: Copy Artifact
       copy:
-       src: target
-       dest: /home/ansible
-    - name : Build image
+        src: target
+        dest: /home/ansible
+
+    - name: Build image
       command: docker build -t hunjan/mavenwebapp .
-    - name : docker Hub login
-      comand: docker login -u hunjan -p @200oclocK
-    - name : Push Docker Image
+
+    - name: Docker Hub login
+      command: docker login -u hunjan -p @200oclocK
+
+    - name: Push Docker Image
       command: docker push hunjan/mavenwebapp
+
 - name: Second Play - K8s Deployment
   hosts: eks
   tasks:
-   - name: 
-     copy:
-       src: k8s-deploy.yml
-       dest: /home/ansible
-   - name : K8S Deployment
-     command: kubectl apply -f k8s-deploy.yml
+    - name: Copy k8s-deploy.yml
+      copy:
+        src: k8s-deploy.yml
+        dest: /home/ansible
+
+    - name: K8S Deployment
+      command: kubectl apply -f k8s-deploy.yml
