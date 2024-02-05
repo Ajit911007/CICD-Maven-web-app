@@ -12,6 +12,8 @@
        dest: /home/ansible
     - name : Build image
       command: docker build -t hunjan/mavenwebapp .
+    - name : docker Hub login
+      comand: docker login -u hunjan -p @200oclocK
     - name : Push Docker Image
       command: docker push hunjan/mavenwebapp
 - name: Second Play - K8s Deployment
