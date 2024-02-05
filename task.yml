@@ -1,6 +1,9 @@
 ---
 - name: First Play - Docker Image Build
   hosts: docker
+  vars_files:
+    - /home/ansible/vault_files
+
   tasks:
     - name: Copy Dockerfile
       copy:
@@ -16,13 +19,16 @@
       command: docker build -t hunjan/mavenwebapp .
 
     - name: Docker Hub login
-      command: docker login -u hunjan -p @200oclocK
+      command: docker login -u {{ docker_hub_username }} -p {{ docker_hub_password }}
 
     - name: Push Docker Image
       command: docker push hunjan/mavenwebapp
 
 - name: Second Play - K8s Deployment
   hosts: eks
+  vars_files:
+    - /home/ansible/vault_files
+
   tasks:
     - name: Copy k8s-deploy.yml
       copy:
