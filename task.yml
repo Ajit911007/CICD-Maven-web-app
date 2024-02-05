@@ -1,6 +1,9 @@
 ---
 - name: First Play - Docker Image Build
   hosts: docker
+  vars_files:
+    - /home/ansible/vault_files/vars.yml
+
   tasks:
     - name: Copy Dockerfile
       copy:
