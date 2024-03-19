@@ -17,10 +17,7 @@
 
     - name: Build image
       command: docker build -t hunjan/mavenwebapp .
-
-    - name: Docker Hub login
-      command: docker login -u "{{ docker_hub_username }}" -p "{{ docker_hub_password }}"
-
+      
     - name: Push Docker Image
       command: docker push hunjan/mavenwebapp
 
