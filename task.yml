@@ -1,33 +1,25 @@
 ---
 - name: First Play - Docker Image Build
   hosts: docker
-  vars_files:
-    - /home/ansible/vault_files/vars.yml
-
   tasks:
     - name: Copy Dockerfile
       copy:
-        src: Dockerfile
-        dest: /home/ansible/
-
+       src: Dockerfile
+       dest: /home/ansible/
     - name: Copy Artifact
       copy:
-        src: target
-        dest: /home/ansible
-
-    - name: Build image
+       src: target
+       dest: /home/ansible
+    - name : Build image
       command: docker build -t hunjan/mavenwebapp .
-      
-    - name: Push Docker Image
+    - name : Push Docker Image
       command: docker push hunjan/mavenwebapp
-
 - name: Second Play - K8s Deployment
   hosts: eks
   tasks:
-    - name: Copy k8s-deploy.yml
-      copy:
-        src: k8s-deploy.yml
-        dest: /home/ansible
-
-    - name: K8S Deployment
-      command: kubectl apply -f k8s-deploy.yml
+   - name: 
+     copy:
+       src: k8s-deploy.yml
+       dest: /home/ansible
+   - name : K8S Deployment
+     command: kubectl apply -f k8s-deploy.yml
